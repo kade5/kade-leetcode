@@ -9,6 +9,7 @@ def test():
     assert not solution.containsDuplicate(test_2)
     test_3 = [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]
     assert solution.containsDuplicate(test_3)
+    print("All tests passed")
 
 
 if __name__ == "__main__":
