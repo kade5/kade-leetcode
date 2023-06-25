@@ -1,7 +1,8 @@
 class Solution(object):
     def groupAnagrams(self, strs: list[str]):
         """
-        Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+        Given an array of strings strs, group the anagrams together. 
+        You can return the answer in any order.
                 :type strs: List[str]
                 :rtype: List[List[str]]
         """
