@@ -1,7 +1,7 @@
 class Solution(object):
     def groupAnagrams(self, strs: list[str]):
         """
-        Given an array of strings strs, group the anagrams together. 
+        Given an array of strings strs, group the anagrams together.
         You can return the answer in any order.
                 :type strs: List[str]
                 :rtype: List[List[str]]
@@ -29,3 +29,29 @@ class Solution(object):
                     anagrams_list.append([strs[i]])
 
         return anagrams_list
+
+    def groupAnagramsRework(self, strs: list[str]):
+        """
+        Given an array of strings strs, group the anagrams together.
+        You can return the answer in any order.
+                :type strs: List[str]
+                :rtype: List[List[str]]
+        """
+        word_dict = {}
+
+        for i in range(len(strs)):
+            char_array = [0] * 26
+            for character in strs[i]:
+                char_array[self.lowercase_value(character)] += 1
+
+            anagram_hash = tuple(char_array)
+            if not word_dict.get(anagram_hash):
+                word_dict[anagram_hash] = [strs[i]]
+            else:
+                word_dict[anagram_hash].append(strs[i])
+
+        return list(word_dict.values())
+
+    def lowercase_value(self, character):
+        return ord(character) - ord('a')
+
