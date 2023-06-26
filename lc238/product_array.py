@@ -18,6 +18,3 @@ class Solution(object):
             product *= nums[i]
 
         return solution_array
-            
-
-
