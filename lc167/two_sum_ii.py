@@ -10,14 +10,16 @@ class Solution(object):
                 :type target: int
                 :rtype: List[int]
         """
-        for index in range(len(numbers)):
-            index2 = index + 1
-            target_num = target - numbers[index]
-            while index2 < len(numbers):
-                if numbers[index2] == target_num:
-                    return [index + 1, index2 + 1]
-                elif numbers[index2] > target_num:
-                    break
-                index2 += 1
+        index1 = 0
+        index2 = len(numbers) - 1
+
+        while index1 < index2:
+            current_sum = numbers[index1] + numbers[index2]
+            if current_sum == target:
+                return [index1 + 1, index2 + 1]
+            elif current_sum > target:
+                index2 -= 1
+            else:
+                index1 += 1
 
         return []
