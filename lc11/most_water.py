@@ -14,18 +14,17 @@ class Solution(object):
         """
         max_height = 0
 
-        for start in range(len(height) - 1):
-            end = len(height) - 1
-            x_length = end - start
-            local_max = 0
-            while start < end:
-                if height[end] >= height[start]:
-                    local_max = max(local_max, height[start] * x_length)
-                    break
-                else:
-                    local_max = max(local_max, height[end] * x_length)
-                    end -= 1
-                    x_length -= 1
-            max_height = max(max_height, local_max)
+        start = 0
+        end = len(height) - 1
+
+        while start < end:
+            max_height = max(
+                max_height, min(height[start], height[end]) * (end - start)
+            )
+
+            if height[start] < height[end]:
+                start += 1
+            else:
+                end -= 1
 
         return max_height
