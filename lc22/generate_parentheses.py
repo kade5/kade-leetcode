@@ -19,11 +19,6 @@ class Solution:
         if left == 0 and right == 0:
             result.append(current_set)
             return
-        if len(stack) == 0 and left > 0:
-            stack = stack + ")"
-            current_set = current_set + "("
-            self.workFunction(left - 1, right, stack, current_set, result)
-            return
         if len(stack) > 0:
             self.workFunction(left, right - 1, stack[:-1], current_set + ")", result)
         if left > 0:
