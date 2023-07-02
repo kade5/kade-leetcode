@@ -11,18 +11,11 @@ class Solution:
         """
         stack = []
         result = [0] * len(temperatures)
-        largest_temp = 0
 
-        for i, temp in reversed(list(enumerate(temperatures))):
-            if temp > largest_temp:
-                largest_temp = temp
-                stack = [largest_temp]
-                continue
-            else:
-                for j, s_value in reversed(list(enumerate(stack))):
-                    if s_value > temp:
-                        result[i] += len(stack) - j
-                        break
-                stack.append(temp)
+        for i, temp in enumerate(temperatures):
+            while stack and temp > stack[-1][0]:
+                stack_value, stack_index = stack.pop()
+                result[stack_index] = i - stack_index
+            stack.append((temp, i))
 
         return result
