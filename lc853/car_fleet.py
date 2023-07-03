@@ -27,7 +27,7 @@ class Solution:
         fleet_list = sorted(fleet_list, key=lambda x: x[0], reverse=True)
         fleets = []
 
-        for index, car in enumerate(fleet_list):
+        for car in fleet_list:
             time_to_target = (target - car[0]) / car[1]
             if not fleets or time_to_target > fleets[-1]:
                 fleets.append(time_to_target)
