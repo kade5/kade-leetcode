@@ -7,34 +7,21 @@ class Solution:
         :type height: List[int]
         :rtype: int
         """
+
+        sum_water = 0
         left = 0
-        right = 0
-        current_max = 0
-        current_max_index = 0
-        total_rainwater = [0] * len(height)
+        right = len(height) - 1
+        left_max = height[left]
+        right_max = height[right]
 
-        while left < len(height) - 1:
-            current_max = -1
-            current_max_index = 0
-            right = left + 1
-            total_rainwater[left] = 0
-            if height[left] == 0:
+        while left < right:
+            if left_max > right_max:
+                right -= 1
+                right_max = max(right_max, height[right])
+                sum_water += right_max - height[right]
+            else:
                 left += 1
-                continue
-            while right < len(height):
-                if height[right] >= height[left]:
-                    current_max = -1
-                    left = right
-                    break
-                if height[right] > current_max:
-                    current_max = height[right]
-                    current_max_index = right
-                total_rainwater[right] = height[left] - height[right]
-                right += 1
-            if current_max != -1:
-                for index in range(left + 1, right):
-                    total_rainwater[index] = current_max - height[index]
-                left = current_max_index
+                left_max = max(left_max, height[left])
+                sum_water += left_max - height[left]
 
-        total_rainwater[-1] = 0
-        return sum(total_rainwater)
+        return sum_water
