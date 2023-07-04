@@ -23,26 +23,18 @@ class Solution:
         hpp = h // len(piles)
         min_range = ceil(min(piles) / hpp)
         max_range = ceil(max(piles) / hpp)
-        mid = 0
-        mid_value = 0
+        min_bananas = max(piles)
 
         while min_range <= max_range:
             mid = (max_range + min_range) // 2
             mid_value = self.calculate_mid(piles, mid)
-            if mid_value == h:
-                break
-            elif mid_value > h:
-                min_range = mid + 1
-            else:
+            if mid_value <= h:
+                min_bananas = min(min_bananas, mid)
                 max_range = mid - 1
+            else:
+                min_range = mid + 1
 
-        while mid > 0:
-            mid_value = self.calculate_mid(piles, mid - 1)
-            if mid_value != h:
-                break
-            mid -= 1
-
-        return mid
+        return min_bananas
 
     def calculate_mid(self, piles, mid):
         hours = 0
