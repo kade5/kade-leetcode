@@ -11,21 +11,13 @@ class Solution:
                 :type prices: List[int]
                 :rtype: int
         """
-        if len(prices) <= 1:
-            return 0
-
-        buy = 0
-        sell = 1
         profit = 0
+        lowest = prices[0]
 
-        while buy < len(prices) - 1:
-            current_profit = prices[sell] - prices[buy]
-            profit = max(profit, current_profit)
-            if sell == len(prices) - 1:
-                buy += 1
-                sell = buy
-            elif prices[buy] >= prices[sell]:
-                buy = sell
-            sell += 1
+        for price in prices:
+            if price < lowest:
+                lowest = price
+            profit = max(profit, price - lowest)
+
 
         return profit
