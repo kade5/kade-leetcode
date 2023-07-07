@@ -15,9 +15,7 @@ class Solution:
                 current_sub_length += 1
                 char_map[l] = i
             else:
-                current_sub_length = current_sub_length - (
-                    char_map.get(l) - (i - current_sub_length)
-                )
+                current_sub_length = i - char_map.get(l)
                 char_map[l] = i
             max_sub_length = max(max_sub_length, current_sub_length)
 
