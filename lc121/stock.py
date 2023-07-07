@@ -19,5 +19,4 @@ class Solution:
                 lowest = price
             profit = max(profit, price - lowest)
 
-
         return profit
