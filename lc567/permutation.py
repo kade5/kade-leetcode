@@ -13,32 +13,27 @@ class Solution:
                 :type s2: str
                 :rtype: bool
         """
-        char_map = defaultdict(int)
+        if len(s1) > len(s2):
+            return False
+        s1_map = [0] * 26
+        s2_map = [0] * 26
+        s1_length = len(s1)
 
         for c in s1:
-            char_map[c] = char_map.get(c, 0) + 1
+            s1_map[ord(c) - ord('a')] += 1
+        for i in range(s1_length):
+            s2_map[ord(s2[i]) - ord('a')] += 1
 
-        left = 0
-        right = 0
+        if s1_map == s2_map:
+            return True
 
-        while right < len(s2):
-            test_map = char_map.copy()
-            s1_len = len(s1)
-            if char_map.get(s2[left]) is None:
-                left += 1
-                right = left
-            else:
-                while right < len(s2) and test_map.get(s2[right]) and s1_len > 0:
-                    test_map[s2[right]] = test_map.get(s2[right]) - 1
-                    s1_len -= 1
-                    right += 1
-                if s1_len == 0:
-                    return True
-                if right < len(s2) and char_map.get(s2[right]) is None:
-                    left = right
-                    right = left
-                    continue
-                left += 1
-                right = left
+        for i in range(s1_length, len(s2)):
+            s2_map[ord(s2[i - s1_length]) - ord('a')] -= 1
+            s2_map[ord(s2[i]) - ord('a')] += 1
+            if s1_map == s2_map:
+                return True
 
         return False
+
+
+            
