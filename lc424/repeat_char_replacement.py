@@ -12,23 +12,16 @@ class Solution:
                 :rtype: int
         """
         longest_substring = 0
-        char_set = set(c for c in s)
+        char_dict = {}
+        right = 0
+        left = 0
 
-        for replace in char_set:
-            current_longest = 0
-            used_replacements = 0
-            for i, c in enumerate(s):
-                if c == replace:
-                    current_longest += 1
-                else:
-                    if used_replacements < k:
-                        used_replacements += 1
-                        current_longest += 1
-                    else:
-                       for check in s[i - current_longest:i]:
-                            if check != replace:
-                                break
-                            current_longest -= 1
-                longest_substring = max(longest_substring, current_longest)
+        while right < len(s):
+            char_dict[s[right]] = char_dict.get(s[right], 0) + 1
+            while right - left + 1 - max(char_dict.values()) > k:
+                char_dict[s[left]] = char_dict.get(s[left]) - 1
+                left += 1
+            longest_substring = max(longest_substring, right - left + 1)
+            right += 1
 
         return longest_substring
