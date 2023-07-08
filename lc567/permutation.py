@@ -34,6 +34,10 @@ class Solution:
                     right += 1
                 if s1_len == 0:
                     return True
+                if right < len(s2) and char_map.get(s2[right]) is None:
+                    left = right
+                    right = left
+                    continue
                 left += 1
                 right = left
 
