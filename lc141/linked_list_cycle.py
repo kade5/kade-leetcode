@@ -4,16 +4,17 @@ class ListNode:
         self.val = x
         self.next = None
 
+
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
-        node_set = set()
-        next_node = head
+        slow_node = head
+        fast_node = head
 
-        while next_node:
-            if next_node in node_set:
+        while fast_node and fast_node.next:
+            slow_node = slow_node.next
+            fast_node = fast_node.next.next
+
+            if slow_node is fast_node:
                 return True
-            node_set.add(next_node)
-            next_node = next_node.next
-
 
         return False
