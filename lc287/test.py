@@ -17,6 +17,12 @@ class TestSolution(unittest.TestCase):
         test_output = self.solution.findDuplicate(input_1)
         self.assertEqual(test_output, correct_output)
 
+    def test_all_same(self):
+        input_1 = [2, 2, 2, 2, 2]
+        correct_output = 2
+        test_output = self.solution.findDuplicate(input_1)
+        self.assertEqual(test_output, correct_output)
+
 
 if __name__ == "__main__":
     unittest.main()
