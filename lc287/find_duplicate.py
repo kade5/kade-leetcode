@@ -1,8 +1,18 @@
 class Solution:
     def findDuplicate(self, nums: list[int]) -> int:
-        sum_nums = -(len(nums) * (len(nums) - 1)) // 2
+        slow_pointer = 0
+        fast_pointer = 0
 
-        for num in nums:
-            sum_nums += num
+        while True:
+            slow_pointer = nums[slow_pointer]
+            fast_pointer = nums[nums[fast_pointer]]
+            if slow_pointer == fast_pointer:
+                break
 
-        return sum_nums
+        start_pointer = 0
+        while slow_pointer != start_pointer:
+            slow_pointer = nums[slow_pointer]
+            start_pointer = nums[start_pointer]
+
+        return start_pointer
+
