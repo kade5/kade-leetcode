@@ -9,12 +9,11 @@ class Solution:
             if i >= len(digits):
                 results.append(word)
                 return
-            for j in range(i, len(digits)):
 
-                for letter in nums[int(digits[j])]:
-                    word += letter
-                    addCombination(j + 1)
-                    word = word[:-1]
+            for letter in nums[int(digits[i])]:
+                word += letter
+                addCombination(i + 1)
+                word = word[:-1]
 
         if len(digits) > 0:
             addCombination(0)
@@ -27,7 +26,7 @@ class Solution:
         nums[3] = ['d', 'e', 'f']
         nums[4] = ['g', 'h', 'i']
         nums[5] = ['j', 'k', 'l']
-        nums[6] = ['m', 'k', 'l']
+        nums[6] = ['m', 'n', 'o']
         nums[7] = ['p', 'q', 'r', 's']
         nums[8] = ['t', 'u', 'v']
         nums[9] = ['w', 'x', 'y', 'z']
