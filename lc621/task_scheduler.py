@@ -1,3 +1,4 @@
+from collections import deque
 import heapq
 
 
@@ -10,7 +11,7 @@ class Solution:
 
         task_heap = [[value, key] for key, value in hash_map.items()]
         heapq.heapify(task_heap)
-        queue = []
+        queue = deque()
         count = 0
 
         while task_heap or queue:
