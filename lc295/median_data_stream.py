@@ -44,8 +44,4 @@ class MedianFinder:
         if self.nums_length % 2 == 1:
             return self.middle
         else: #self.nums_length % 2 == 0
-            left = -heapq.heappop(self.max_heap)
-            right = heapq.heappop(self.min_heap)
-            heapq.heappush(self.max_heap, -left)
-            heapq.heappush(self.min_heap, right)
-            return (left + right) / 2
+            return (-self.max_heap[0] + self.min_heap[0]) / 2
