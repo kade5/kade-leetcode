@@ -1,36 +1,32 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
-        visited = set()
         graph = self.buildGraph(numCourses, prerequisites)
-        path = set()
-        completable = True
+        visited = set()
 
         def dfs(course):
-            nonlocal completable
-            if not completable:
-                return
+            if course in visited:
+                return False
+            if graph[course] == []:
+                return True
+            
+            visited.add(course)
 
-            if course not in visited:
-                visited.add(course)
-
-            for c in graph[course]:
-                if c in path:
-                    completable = False
-                    return
-                path.add(c)
-                dfs(c)
-                path.remove(c)
+            for prereq in graph[course]:
+                if not dfs(prereq): return False
+            
+            visited.remove(course)
+            graph[course] = []
+            return True
 
         for course in range(numCourses):
-            if course not in visited:
-                dfs(course)
+            if not dfs(course): return False
+        return True
 
-        return completable
 
     def buildGraph(self, numCourses, prerequisites):
         graph = [[] for _ in range(numCourses)]
 
         for prereq in prerequisites:
-            graph[prereq[0]].append(prereq[1])
+            graph[prereq[1]].append(prereq[0])
 
         return graph
