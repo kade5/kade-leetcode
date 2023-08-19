@@ -7,8 +7,11 @@ class Trie:
 class Solution:
     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
         trie = self.buildTrie(wordDict)
+        cache = {}
 
         def search(s):
+            if s in cache:
+                return cache[s]
             current_trie = trie
             i = 0
             found = False
@@ -21,7 +24,10 @@ class Solution:
                 i += 1
 
             if i == len(s) and current_trie.word:
+                cache[s] = True
                 return True
+
+            cache[s] = found
             return found
 
         return search(s)
