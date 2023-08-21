@@ -2,34 +2,20 @@ class Solution:
     def insert(
         self, intervals: list[list[int]], newInterval: list[int]
     ) -> list[list[int]]:
-        new_intervals = []
-        start = 0
+        result = []
 
-        # find start
-        pos = 0
-        while pos < len(intervals):
-            new_intervals.append(intervals[pos])
-            if newInterval[0] >= intervals[pos][0]:
-                start = pos
-                break
-            pos += 1
+        for i in range(len(intervals)):
+            if newInterval[1] < intervals[i][0]:
+                result.append(newInterval)
+                result.extend(intervals[i:])
+                return result
+            elif newInterval[0] > intervals[i][1]:
+                result.append(intervals[i])
+            else:
+                newInterval = self.mergeInterval(newInterval, intervals[i])
 
-        if pos == len(intervals):
-            return new_intervals.append(newInterval)
+        result.append(newInterval)
+        return result
 
-        pos += 1
-
-        # find end
-        while pos < len(intervals):
-            if intervals[pos][1] > newInterval[1]:
-                break
-            pos += 1
-
-        intervals[start] = [
-            min(newInterval[0], intervals[start][0]),
-            max(newInterval[1], intervals[pos][1]),
-        ]
-
-        for i in range(pos, len(intervals)):
-            new_intervals.append(intervals[i])
-        return new_intervals
+    def mergeInterval(self, interval1, interval2):
+        return [min(interval1[0], interval2[0]), max(interval1[1], interval2[1])]
