@@ -1,42 +1,38 @@
-from collections import deque
-
-
 class Solution:
     def alienOrder(self, words: list[str]) -> str:
-        letters = set()
-        prev_word = words[0]
-        result = ""
-        queue = deque()
-        for word in words:
-            for letter in word:
-                letters.add(letter)
+        tree = {c: set() for w in words for c in w}
 
-        queue.append(prev_word[0])
+        for i in range(len(words) - 1):
+            w1, w2 = words[i], words[i + 1]
+            min_length = min(len(w1), len(w2))
 
-        graph = {l: [] for l in letters}
+            if len(w1) > len(w2) and w1[:min_length] == w2[:min_length]:
+                return ""
 
-        for word in words[1:]:
-            i = 0
-            while i < len(word) and word[i] == prev_word[i]:
-                i += 1
+            for j in range(min_length):
+                if w1[j] != w2[j]:
+                    tree[w1[j]].add(w2[j])
+                    break
 
-            if i < len(word):
-                graph[word[i]].append(prev_word[i])
+        visit = {}
+        result = []
 
-        letters = list(letters)
+        def dfs(c):
+            if c in visit:
+                return visit[c]
 
-        for letter in letters:
-            queue.append(letter)
+            visit[c] = True
 
-            while queue:
-                cur = queue.popleft()
-                if cur in result:
-                    return ""
+            for adj in tree[c]:
+                if dfs(adj):
+                    return True
 
-                result += cur
-                letters.remove(cur)
+            visit[c] = False
+            result.append(c)
 
-                for adj in graph[cur]:
-                    queue.append(adj)
+        for c in tree:
+            if dfs(c):
+                return ""
 
-        return result
+        result.reverse()
+        return "".join(result)
