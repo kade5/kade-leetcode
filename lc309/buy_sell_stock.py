@@ -5,14 +5,14 @@ class Solution:
         def dfs(i: int, orien: int) -> int:
             if i >= len(prices):
                 return 0
-            if i in memory:
-                return memory[i]
+            if (i, orien) in memory:
+                return memory[(i, orien)]
 
             if orien == 1:
-                memory[i] = max(orien * prices[i] + dfs(i + 2, orien * -1), dfs(i + 1, orien))
+                memory[(i, orien)] = max(orien * prices[i] + dfs(i + 2, orien * -1), dfs(i + 1, orien))
             else:
-                memory[i] = max(orien * prices[i] + dfs(i + 1, orien * -1), dfs(i + 1, orien))
+                memory[(i, orien)] = max(orien * prices[i] + dfs(i + 1, orien * -1), dfs(i + 1, orien))
 
-            return memory[i]
+            return memory[(i, orien)]
 
         return dfs(0, -1)
