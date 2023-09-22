@@ -1,29 +1,26 @@
 class Solution:
     def numDistinct(self, s: str, t: str) -> int:
-        if len(t) > len(s):
+        len_t = len(t)
+        len_s = len(s)
+        if len_t > len_s:
             return 0
 
-        cache = [[0] * (len(s) + 1) for _ in range(len(t) + 1)]
-        for i in range(len(s) + 1):
-            cache[0][i] = 1
+        cache = [[-1] * len_t for _ in range(len_s)]
 
-        for i in range(1, len(t) + 1):
-            for j in range(1, len(s) + 1):
-                x = i - 1
-                y = j - 1
-                if j > i:
-                    cache[i][j] = 0
+        def dfs(i, j):
+            if j >= len_t:
+                return 1
+            if i >= len_s:
+                return 0
 
-                if cache[i][j - 1] == 0:
-                    if t[x] == s[y]:
-                        cache[i][j] = cache[i - 1][j]
-                    else:
-                        cache[i][j] = 0
-                else:
-                    current_max = max(cache[i - 1][j], cache[i][j - 1])
-                    if t[x] == s[y]:
-                        cache[i][j] = current_max + 1
-                    else:
-                        cache[i][j] = current_max
+            if cache[i][j] != -1:
+                return cache[i][j]
 
-        return cache[len(t)][len(s)]
+            if s[i] == t[j]:
+                cache[i][j] = dfs(i + 1, j + 1) + dfs(i + 1, j)
+                return cache[i][j]
+            else:
+                cache[i][j] = dfs(i + 1, j)
+                return cache[i][j]
+
+        return dfs(0, 0)
