@@ -1,13 +1,16 @@
 class Solution:
     def jump(self, nums: list[int]) -> int:
         n = len(nums)
-        result = [0] * n
+        result = 0
+        l, r = 0, 0
 
-        for i in range(n - 2, -1, -1):
-            min_value = 100000
-            for j in range(i + 1, min(n, i + nums[i] + 1)):
-                min_value = min(min_value, result[j])
+        while r < n - 1:
+            max_jump = 0
+            for i in range(l, r + 1):
+                max_jump = max(max_jump, nums[i] + i)
 
-            result[i] = min_value + 1
+            result += 1
+            l = r + 1
+            r = max_jump
 
-        return result[0]
+        return result
