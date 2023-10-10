@@ -1,6 +1,3 @@
-from collections import defaultdict
-
-
 class Solution:
     def findCheapestPrice(
         self, n: int, flights: list[list[int]], src: int, dst: int, k: int
@@ -8,18 +5,14 @@ class Solution:
         inf = 100000
         cheapest = [inf] * n
         cheapest[src] = 0
-        graph = defaultdict(list)
-
-        for flight in flights:
-            graph[flight[0]].append((flight[1], flight[2]))
 
         for _ in range(k + 1):
-            for i in range(n):
-                prev = cheapest[i]
-                if prev == inf:
+            tmp_cheapest = cheapest.copy()
+            for s, d, p in flights:
+                if cheapest[s] == inf:
                     continue
+                tmp_cheapest[d] = min(tmp_cheapest[d], cheapest[s] + p)
 
-                for d, price in graph[i]:
-                    cheapest[d] = min(cheapest[d], price + prev)
+            cheapest = tmp_cheapest.copy()
 
         return cheapest[dst] if cheapest[dst] != inf else -1
