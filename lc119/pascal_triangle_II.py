@@ -1,16 +1,11 @@
 class Solution:
     def getRow(self, rowIndex: int) -> list[int]:
-        if rowIndex == 0:
-            return [1]
+        result = [1]
 
-        current = [1, 1]
+        for _ in range(1, rowIndex + 1):
+            result.append(1)
 
-        for _ in range(1, rowIndex):
-            prev = current.copy()
-            current = [1]
-            for j in range(1, len(prev)):
-                current.append(prev[j - 1] + prev[j])
+            for i in range(len(result) - 2, 0, -1):
+                result[i] = result[i] + result[i - 1]
 
-            current.append(1)
-
-        return current
+        return result
