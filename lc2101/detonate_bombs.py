@@ -6,18 +6,18 @@ class Solution:
     def maximumDetonation(self, bombs: list[list[int]]) -> int:
         tree = defaultdict(list)
 
-        for x0, y0, r0 in bombs:
-            for x, y, _ in bombs:
+        for i0, (x0, y0, r0) in enumerate(bombs):
+            for i, (x, y, _) in enumerate(bombs):
                 d = sqrt((x - x0) ** 2 + (y - y0) ** 2)
                 if d <= r0:
-                    tree[(x0, y0)].append((x, y))
+                    tree[i0].append(i)
 
-        def bfs(x, y, tree) -> int:
+        def bfs(i, tree) -> int:
             queue = deque()
             result = 0
             exploded = set()
 
-            queue.append((x, y))
+            queue.append(i)
 
             while queue:
                 cur = queue.popleft()
@@ -33,7 +33,7 @@ class Solution:
             return result
 
         result = 0
-        for x, y, _ in bombs:
-            result = max(result, bfs(x, y, tree))
+        for i, _ in enumerate(bombs):
+            result = max(result, bfs(i, tree))
 
         return result
