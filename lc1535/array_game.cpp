@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <queue>
 #include <unordered_map>
 #include <vector>
 
@@ -9,28 +10,34 @@ class Solution {
 
 public:
   int getWinner(vector<int> &arr, int k) {
-    unordered_map<int, int> wins(arr.size());
+    queue<int> game;
     int max_element = arr[0];
-    k = min(k, int(arr.size()));
+    int current = arr[0];
+    int wins = 0;
 
     for (int i = 1; i < arr.size(); i++) {
       max_element = max(max_element, arr[i]);
+      game.push(arr[i]);
     }
 
-    while (wins[arr[0]] < k) {
-      if (arr[0] > arr[1]) {
-        arr.push_back(arr[1]);
-        arr.erase(arr.begin() + 1);
+    while (!game.empty()) {
+      auto value = game.front();
+      game.pop();
+
+      if (current > value) {
+        game.push(value);
+        wins += 1;
       } else {
-        arr.push_back(arr[0]);
-        arr.erase(arr.begin());
+        game.push(current);
+        current = value;
+        wins = 1;
       }
-      if (arr[0] == max_element) {
-	return max_element;
+
+      if (current == max_element || wins == k) {
+        return current;
       }
-      wins[arr[0]] += 1;
     }
 
-    return arr[0];
+    return current;
   }
 };
