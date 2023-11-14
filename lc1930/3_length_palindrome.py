@@ -1,25 +1,23 @@
 class Solution:
     def countPalindromicSubsequence(self, s: str) -> int:
-        result = set()
-        cache = set()
+        letters = set(s)
+        result = 0
 
-        def addToResult(s, l, r):
-            i = l + 1
-            while i < r:
-                result.add(s[l] + s[i] + s[r])
-                i += 1
+        for letter in letters:
+            i = -1
+            j = -1
 
-        def countPalin(s, l, r):
-            if l >= r:
-                return
+            for pos, c in enumerate(s):
+                if c == letter:
+                    if i == -1:
+                        i = pos
+                    else:
+                        j = pos
 
-            if s[l] == s[r] and (l, r) not in cache:
-                addToResult(s, l, r)
-                cache.add((l, r))
-                countPalin(s, l + 1, r - 1)
-            else:
-                countPalin(s, l + 1, r)
-                countPalin(s, l, r - 1)
+            palin = set()
+            for pos in range(i + 1, j):
+                palin.add(s[pos])
 
-        countPalin(s, 0, len(s) - 1)
-        return len(result)
+            result += len(palin)
+
+        return result
