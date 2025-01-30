@@ -31,7 +31,8 @@ class Solution:
                         and 0 <= pos[1] + direct[1] < n
                         and (pos[0] + direct[0], pos[1] + direct[1]) not in visited
                         and grid[pos[0] + direct[0]][pos[1] + direct[1]] != 'X'
-                        and grid[pos[0] + direct[0]][pos[1] + direct[1]] != '#'):
+                        and grid[pos[0] + direct[0]][pos[1] + direct[1]] != '#')\
+                        and solution_grid[pos[0] + direct[0]][pos[1] + direct[1]] > steps + 1:
                         qu.append(((pos[0] + direct[0], pos[1] + direct[1]), steps + 1))
 
         if solution_grid[person[0]][person[1]] < m * n:
