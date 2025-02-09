@@ -1,12 +1,16 @@
+from collections import defaultdict
 class Solution:
     def countBadPairs(self, nums: list[int]) -> int:
-        count_bad = 0
+        n = len(nums)
+        count_bad = n * (n - 1) // 2
+        num_hash = defaultdict(int)
 
-        for i in range(len(nums) - 1):
-            for j in range(i + 1, len(nums)):
-                i_diff = j - i
-                num_diff = nums[j] - nums[i]
-                if i_diff != num_diff:
-                    count_bad += 1
+        for i, num in enumerate(nums):
+            num_hash[num - i] += 1
+
+        for key, value in num_hash.items():
+            if value > 1:
+                count_bad -= value * (value - 1) // 2
 
         return count_bad
+
